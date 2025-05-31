@@ -1,7 +1,5 @@
 # real-simple-avatar
-
-# Real Simple Avatar
-## Реально простой плагин аватарок для Wordpress, который ты искал!
+## Real Simple Avatar
 
 ## <a href="https://wordpress.org/plugins/real-simple-avatar/">Плагин на Wordpress</a>
 
