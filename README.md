@@ -1,11 +1,12 @@
-![screenshot-3](https://github.com/user-attachments/assets/073ba131-7959-4c9b-9d8b-b39c2fa92fdf)# real-simple-avatar
+# real-simple-avatar
 ## Real Simple Avatar
 
 ## <a href="https://wordpress.org/plugins/real-simple-avatar/">Скачать этот плагин на Wordpress</a>
 
 ---
 
-Real Simple Avatar — простой лёгкий плагин для аватарок, который ты искал! Главное, когда пользователь загружает свою аватарку, то его прошлая аватарка удаляется из медиатеки Wordpress
+Real Simple Avatar — простой лёгкий плагин для аватарок, который ты искал! 
+<br>Главное, когда пользователь загружает свою аватарку, то его прошлая аватарка удаляется из медиатеки Wordpress
 
 ---
 
