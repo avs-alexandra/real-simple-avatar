@@ -1,5 +1,6 @@
 # real-simple-avatar
 ## Real Simple Avatar
+<img width="200" alt="icon-256x256" src="https://github.com/user-attachments/assets/35f86100-5c89-49bf-a822-45d8783cf20b" />
 
 ## <a href="https://wordpress.org/plugins/real-simple-avatar/">Скачать этот плагин на Wordpress</a>
 
