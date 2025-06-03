@@ -4,6 +4,9 @@
 
 ## <a href="https://wordpress.org/plugins/real-simple-avatar/">Скачать этот плагин на Wordpress</a>
 
+Если не хотите устаналивать плагин, то <a href="https://gist.github.com/avs-alexandra/418d65d0343beb7a66079964e1baf06a">сниппет-код тут</a>
+
+
 ---
 
 Real Simple Avatar — простой лёгкий плагин для аватарок, который ты искал! 
