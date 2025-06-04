@@ -295,7 +295,7 @@ function rsava_front_handle_avatar_upload() {
             exit;
         }
         // Validate mime-type on server (sanitize path for validation only, not for output)
-        $tmp_name = filter_var($_FILES['rsava_user_avatar']['tmp_name'], FILTER_SANITIZE_STRING);
+        $tmp_name = $_FILES['rsava_user_avatar']['tmp_name'];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mime = finfo_file($finfo, $tmp_name);
         finfo_close($finfo);
