@@ -4,7 +4,7 @@
 
 ## <a href="https://wordpress.org/plugins/real-simple-avatar/">Скачать этот плагин на Wordpress</a>
 
-Или <a href="https://github.com/avs-alexandra/subscription-price/releases/download/v1.0.0/real-simple-avatar.zip">скачать архивом тут</a>
+Или <a href="https://github.com/avs-alexandra/real-simple-avatar/releases/download/v1.0.0/real-simple-avatar.zip">скачать архивом тут</a>
 
 
 
