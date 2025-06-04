@@ -1,10 +1,10 @@
 jQuery(document).ready(function($){
-    // --- Админка: выбор аватара по умолчанию через медиатеку ---
+    // --- Admin: choose default avatar via media library ---
     $('#rsava_select_default_avatar').on('click', function(e){
         e.preventDefault();
         let frame = wp.media({
-            title: 'Выберите или загрузите аватар по умолчанию',
-            button: { text: 'Использовать' },
+            title: rsavaL10n.chooseDefaultAvatar,
+            button: { text: rsavaL10n.use },
             library: { type: 'image' },
             multiple: false
         });
@@ -16,12 +16,12 @@ jQuery(document).ready(function($){
         frame.open();
     });
 
-    // --- Админка: индивидуальный аватар пользователя ---
+    // --- Admin: choose user avatar via media library ---
     $('#rsava_select_avatar').on('click', function(e){
         e.preventDefault();
         let frame = wp.media({
-            title: 'Выберите или загрузите аватар пользователя',
-            button: { text: 'Использовать' },
+            title: rsavaL10n.chooseUserAvatar,
+            button: { text: rsavaL10n.use },
             library: { type: 'image' },
             multiple: false
         });
@@ -33,25 +33,27 @@ jQuery(document).ready(function($){
         frame.open();
     });
 
-    // --- Переместить поле вниз после рейтинга аватара (опционально) ---
+    // --- Move field after avatar rating (optional) ---
     var $row = $('#rsava_select_default_avatar').closest('tr');
     var $avatarRatingRow = $('#avatar_rating').closest('tr');
     if($row.length && $avatarRatingRow.length) {
         $row.insertAfter($avatarRatingRow);
     }
 
-    // === Фронтовая форма аватара ===
-    // Ожидается структура: 
-    // <input type="file" id="rsavaUserAvatarFile" data-maxsize="...">
-    // <img id="rsava-current-avatar" src="..." ...>
-    // <div id="rsava-avatar-error"></div>
-    // <form id="rsavaAvatarForm">...</form>
+    // === Frontend avatar form ===
     var $upload = $('#rsavaUserAvatarFile');
-    var $avatarImg = $('#rsava-current-avatar');
+    var $avatarImg = $('.rsava-avatar-img');
     var $form = $('#rsavaAvatarForm');
     var $errorDiv = $('#rsava-avatar-error');
-    var originalAvatarSrc = $avatarImg.length ? $avatarImg.attr('src') : '';
+    var $defaultInput = $('#rsava-user-avatar-url');
+    var originalAvatarSrc = $defaultInput.length && $defaultInput.val() ? $defaultInput.val() : ($avatarImg.length ? $avatarImg.attr('src') : '');
     var maxSize = $upload.data('maxsize') ? parseInt($upload.data('maxsize'), 10) : 4*1024*1024;
+
+    // Set current avatar on page load (e.g. after reload)
+    if($avatarImg.length && originalAvatarSrc) {
+        $avatarImg.attr('src', originalAvatarSrc);
+        $avatarImg.attr('data-default', originalAvatarSrc);
+    }
 
     function clearAvatarError() {
         if($errorDiv.length) $errorDiv.text('');
@@ -66,22 +68,31 @@ jQuery(document).ready(function($){
 
             if(this.files.length && this.files[0]) {
                 var file = this.files[0];
-                // Проверка размера
+                // Size check
                 if(file.size > maxSize) {
-                    if($errorDiv.length) $errorDiv.text("Файл больше " + (maxSize/1024/1024).toFixed(1) + " МБ");
+                    if($errorDiv.length) $errorDiv.text(rsavaL10n.fileTooLarge + " " + (maxSize/1024/1024).toFixed(1) + " " + rsavaL10n.mb);
                     this.value = "";
-                    if($avatarImg.length) $avatarImg.attr('src', originalAvatarSrc); // вернуть исходный
+                    if($avatarImg.length) $avatarImg.attr('src', originalAvatarSrc); // revert original
                     return;
                 }
-                // Показать миниатюру прямо в основном аватаре
+                // Type check
+                if(!/^image\//.test(file.type)) {
+                    if($errorDiv.length) $errorDiv.text(rsavaL10n.onlyImage);
+                    this.value = "";
+                    if($avatarImg.length) $avatarImg.attr('src', originalAvatarSrc);
+                    return;
+                }
+                // Show thumbnail in main avatar
                 var reader = new FileReader();
                 reader.onload = function(e) {
-                    if($avatarImg.length)
+                    if($avatarImg.length) {
                         $avatarImg.attr('src', e.target.result);
+                        $avatarImg.removeAttr('srcset').removeAttr('sizes');
+                    }
                 };
                 reader.readAsDataURL(file);
             } else {
-                if($avatarImg.length) $avatarImg.attr('src', originalAvatarSrc); // если файл сбросили
+                if($avatarImg.length) $avatarImg.attr('src', originalAvatarSrc); // if file is reset
             }
         });
     }
@@ -91,7 +102,12 @@ jQuery(document).ready(function($){
             if($upload[0].files.length > 0) {
                 var file = $upload[0].files[0];
                 if(file.size > maxSize) {
-                    if($errorDiv.length) $errorDiv.text("Файл больше " + (maxSize/1024/1024).toFixed(1) + " МБ");
+                    if($errorDiv.length) $errorDiv.text(rsavaL10n.fileTooLarge + " " + (maxSize/1024/1024).toFixed(1) + " " + rsavaL10n.mb);
+                    e.preventDefault();
+                    return false;
+                }
+                if(!/^image\//.test(file.type)) {
+                    if($errorDiv.length) $errorDiv.text(rsavaL10n.onlyImage);
                     e.preventDefault();
                     return false;
                 }
@@ -99,10 +115,24 @@ jQuery(document).ready(function($){
         });
     }
 
-    // Удалить параметр rsava_error из адресной строки, чтобы ошибка не появлялась после обновления
+    // Remove rsava_error param from URL so error does not appear after refresh
     if(window.location.search.indexOf('rsava_error=') !== -1) {
         var url = new URL(window.location.href);
         url.searchParams.delete('rsava_error');
         window.history.replaceState({}, document.title, url.pathname + url.search);
     }
+
+    // =========================
+    // Custom "Upload Avatar" button and selected file name
+    var $btn = $('#rsavaCustomFileBtn');
+    if ($upload.length && $btn.length) {
+        $btn.on('click', function(e){
+            e.preventDefault();
+            $upload.click();
+        });
+    }
+    $upload.on('change', function(){
+        var fileName = this.files.length ? this.files[0].name : '';
+        $('#rsavaCustomFileLabel').text(fileName ? rsavaL10n.selected + ' ' + fileName : '');
+    });
 });
