@@ -1,0 +1,10 @@
+.rsava-avatar-upload-form {padding:10px;text-align:center;}
+#rsava-current-avatar{max-width: 90px;max-height: 90px;border:3px solid #FFB829;}
+.rsava-avatar-maxsize{font-size: 13px;}
+#rsavaUserAvatarFile {display:none;}
+.rsava-addfile {padding: 10px 22px;font-size:16px;font-weight:600;cursor:pointer;display:inline-block;margin-top:10px;}
+.rsava-file-label{display:block;color:#888;font-size:14px;}
+.rsava-save-button{padding:10px 22px;font-size:16px;font-weight:600;cursor:pointer;margin-top:10px;}
+.rsava-default-button {background: transparent !important;color:#a1a1a1 !important;text-decoration:underline;font-size:13px;border:none !important;padding:6px 10px;}
+#rsava-avatar-error, .rsava-server-error{font-size: 14px;}
+.rsava-avatar-img {width:90px!important;height:90px!important;border-radius: 50% !important;object-fit:cover;border:3px solid #FFB829!important;}
