@@ -14,14 +14,6 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
-// Загрузка перевода плагина
-add_action('plugins_loaded', function() {
-    load_plugin_textdomain(
-        'real-simple-avatar',
-        false,
-        dirname(plugin_basename(__FILE__)) . '/languages'
-    );
-});
 
 function rsava_get_user_avatar_id( $user_id ) {
     return intval( get_user_meta( $user_id, 'rsava_user_avatar', true ) );
